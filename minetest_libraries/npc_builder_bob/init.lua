@@ -2,7 +2,7 @@ local find_resource = dofile(minetest.get_modpath("modname").."/find_resource.lu
 local gather_resource = dofile(minetest.get_modpath("modname").."/gather_resource.lua")
 local build_item = dofile(minetest.get_modpath("modname").."/build_item.lua")
 
-minetest.register_entity("modname:npc_builder_bob", {
+minetest.register_entity("builder_bob:npc_builder_bob", {
     initial_properties = {
         visual = "mesh",
         mesh = "character.b3d",
