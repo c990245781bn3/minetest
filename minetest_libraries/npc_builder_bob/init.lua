@@ -1,3 +1,7 @@
+local find_resource = dofile(minetest.get_modpath("modname").."/find_resource.lua")
+local gather_resource = dofile(minetest.get_modpath("modname").."/gather_resource.lua")
+local build_item = dofile(minetest.get_modpath("modname").."/build_item.lua")
+
 minetest.register_entity("modname:npc_builder_bob", {
     initial_properties = {
         visual = "mesh",
@@ -31,32 +35,10 @@ minetest.register_entity("modname:npc_builder_bob", {
             return
         end
         self.state = "gather_wood"
-        self:find_resource("default:tree")
+        find_resource(self, "default:tree")
     end,
-    find_resource = function(self, resource)
-        -- Sub Lua for finding resource
-        minetest.chat_send_player(self.owner, "Looking for " .. resource .. "...")
-        -- Placeholder logic to simulate finding a tree
-        minetest.after(5, function()
-            self:gather_resource(resource)
-        end)
-    end,
-    gather_resource = function(self, resource)
-        -- Sub Lua for gathering resource
-        minetest.chat_send_player(self.owner, "Gathering " .. resource .. "...")
-        -- Placeholder logic to simulate cutting a tree
-        minetest.after(10, function()
-            self:build_item("default:pick_wood")
-        end)
-    end,
-    build_item = function(self, item)
-        -- Sub Lua for building item
-        minetest.chat_send_player(self.owner, "Building " .. item .. "...")
-        local inv = minetest.get_player_by_name(self.owner):get_inventory()
-        inv:add_item("main", item)
-        minetest.chat_send_player(self.owner, "I gave you your pickaxe.")
-        self.state = "idle"
-    end,
+    gather_resource = gather_resource,
+    build_item = build_item,
 })
 
 minetest.register_chatcommand("spawn_npc_builder_bob", {
